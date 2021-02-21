@@ -155,7 +155,7 @@ function loginFunction(){
          user.login = login;
          user.pass = pass;
          txt = JSON.stringify(user);
-         request.open("POST", "http://pascal.fis.agh.edu.pl/~8sledzp/PROJEKT2v2/rest/login", true);
+         request.open("POST", "https://movie-survey.azurewebsites.net/rest/login", true);
          request.send(txt);
       }
    }else{
@@ -184,7 +184,7 @@ function logoutFunction(elem){
       var data = {};
       data.sessionID = getCookie('sessionID');
       txt = JSON.stringify(data);
-      request.open("POST", "http://pascal.fis.agh.edu.pl/~8sledzp/PROJEKT2v2/rest/logout", true);
+      request.open("POST", "https://movie-survey.azurewebsites.net/rest/logout", true);
       request.send(txt);
    }else{
       alert("Błąd. Jesteś w trybie offline!");
@@ -403,7 +403,7 @@ function insertToMongo(formArr, key, whatToDo=true){
    }
    
    txt = JSON.stringify(formArr);
-   request.open("POST", "http://pascal.fis.agh.edu.pl/~8sledzp/PROJEKT2v2/rest/insert", false);
+   request.open("POST", "https://movie-survey.azurewebsites.net/rest/insert", false);
    request.send(txt);
 }
 
@@ -500,7 +500,7 @@ function getAllFromMongoDB(){
       }
    }
 
-   request.open("GET", "http://pascal.fis.agh.edu.pl/~8sledzp/PROJEKT2v2/rest/getAll", true);
+   request.open("GET", "https://movie-survey.azurewebsites.net/rest/getAll", true);
    request.send(null);
 }
 
@@ -729,7 +729,7 @@ if(navigator.onLine){
       }
    }
 
-   request.open("GET", "http://pascal.fis.agh.edu.pl/~8sledzp/PROJEKT2v2/rest/getAll", true);
+   request.open("GET", "https://movie-survey.azurewebsites.net/rest/getAll", true);
    request.send(null);
 }else{
       alert("Opcja niedostępna w trybie offline");
