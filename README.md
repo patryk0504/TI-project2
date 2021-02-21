@@ -30,3 +30,5 @@ If session expired user have to login to upload data. <br>
 Only logged user is able to watch statistics and survey answers. <br>
 
 <h3>Demo</h3>
+
+<img src="/screenshots/demo.gif?raw=true" width="1000px">
