@@ -6,6 +6,22 @@ App stores survey data about movie preferences.
 Link (MS Azure) LINK
 
 
+<h3>Used technologies</h3>
+<h3>Client side</h3>
+<ul>
+  <li>HMTL5</li>
+  <li>JavaScript</li>
+  <li>IndexedDB</li>
+  <li>CSS3</li>
+  <li>JS-Plotly</li>
+</ul>
+
+<h3>Server side</h3>
+<ul>
+  <li>PHP</li> 
+  <li>MongoDB</li>
+</ul>
+
 <h3>How it works?</h3>
 When user is offline or logged out app stores data in local IndexedDB database. <br>
 After switching from offline to online mode server checks if the user's session is still valid (sessionid is stored in cookie). <br>
