@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <meta charset="utf-8">
+      <link type="text/css" href="./clientStyle.css" rel="stylesheet" />
+      <script src="rest.js" type="text/javascript"></script>
+      <script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
+      <script src="restMongoDB.js" type="text/javascript"></script>
+
+      <title>TI Projekt 2</title>
+   </head>
+   <body>
+
+    <header>
+      <nav class = "topnav">
+          <ul>
+              <li><a href="#" id="ankieta" onclick="loadArticle(this);">Wypełnij ankietę</a></li>
+              <li><a href="#" id="odpowiedziAll" onclick="odpowiedziFunction(this);">Pokaż wypełnione ankiety</a></li>
+              <li><a href="#" id="analizaDanych" class="hideWhenLoggedOut" onclick="analizaDanychFunction(this);">Analiza danych</a></li>
+              <li><a href="#" id="zaloguj" class="hideWhenLogged" onclick="loadArticle(this);">Zaloguj się</a></li>
+              <li><a href="#" id="wyloguj" class="hideWhenLoggedOut" onclick="logoutFunction(this);">Wyloguj się</a></li>
+              <li><a href="#" id="zarejestruj" class="hideWhenLogged" onclick="loadArticle(this);">Zarejestruj się</a></li>
+              <li><a href="#" id="about" onclick="loadArticle(this);">About</a></li>
+
+          </ul>
+      </nav>
+  </header>
+  <div id="wrapper">
+    <div id="trybInfo" style="margin-top:100px"></div>
+    <div id="trybLoginInfo"></div>
+  </div>
+
+    <article id="zarejestrujArt" style="display:none;" class="content">
+      <form id="signInForm">
+        <h1 style="margin-top: 1em;">Zarejestruj się</h1>
+        <input name = "login" id="loginSignIn" type="text" align="center" placeholder="login (min. 4 liter/cyfr)"  minlength="4" required> <br>
+        <input name = "password" id="passwordSignIn" type="password" align="center" placeholder="pass (min. 4 liter/cyfr)"  minlength="4" required> <br>
+        <input name = "password" id="repasswordSignIn" type="password" align="center" placeholder="confirm pass"  minlength="4" required> <br>
+        <input type="submit" onclick="signInFunction();" value = "Zarejestruj się" style="margin-top: 1em;"> <br>
+        <span id="SignInInfo" style="color: red;"></span>
+      </form>
+    </article>
+
+    <article id="zalogujArt" style="display:none;" class="content">
+      <form id="loginInForm">
+        <h1 style="margin-top: 1em;">Zaloguj się</h1>
+        <input name = "login" id="login" type="text" align="center" placeholder="login (min. 4 liter/cyfr)"  minlength="4" required> <br>
+        <input name = "password" id="password" type="password" align="center" placeholder="pass (min. 4 liter/cyfr)"  minlength="4" required> <br>
+        <input type="button" onclick="loginFunction();" value = "Zaloguj" style="margin-top: 1em;"> <br>
+        <span id="loginInfo" style="color: red;"></span>
+      </form>
+    </article>
+
+    <article id="wylogujArt" style="display:none;" class="content">
+      <h1 id="logoutInfo" style="text-align:center;"></h1>
+    </article>
+
+    <article id="odpowiedziAllArt" style="display:none;" class="content">
+      <div id="odpowiedziDiv"></div>
+    </article>
+
+    <article id="analizaDanychArt" style="display:none;" class="content">
+      <div class="container">
+        <h1 class="center">Podział ankietowanych ze względu na płeć oraz preferowany gatunek filmowy</h1>
+        <div id="histogramPlecDiv" style='display: inline-block;'></div>
+        <div id="histogramGatunekDiv" style='display: inline-block;'></div>
+      </div>
+      <div class="container">
+        <h1 class="center">Najczęściej korzystana platforma oraz średni tygodniowy czas oglądania</h1>
+        <div id="histogramPlatformaDiv" style='display: inline-block; vertical-align: top;'></div>
+        <div id="histogramCzasDiv" style='display: inline-block; vertical-align: top;'></div>
+      </div>
+      <div id="histogram2"></div>
+      <div id="analizaDiv"></div>
+    </article>
+
+    <article id = "ankietaArt" style="display:none;" class="content">
+      <h1 class="center">Ankieta na temat preferencji filmowych</h1>
+      <form id="surveyForm">
+        <h4>Podaj swoją płeć:</h4>
+        <select id="plec" required>
+          <option value="kobieta">Kobieta</option>
+          <option value="mezczyzna">Mężczyzna</option>
+        </select>
+        
+        <h4>Wybierz swój preferowany gatunek filmowy:</h4>
+        <select id="gatunek" required>
+          <option value="akcja">Akcja</option>
+          <option value="przygodowy">przygodowy</option>
+          <option value="fantasy">Fantasy</option>
+          <option value="horror">Horror</option>
+          <option value="thriller">Thriller</option>
+          <option value="sci-fi">Sci-Fi</option>
+          <option value="dokumentalny">Dokumentalny</option>
+          <option value="sensacyjny">Sensacyjny</option>
+          <option value="komedia">Komedia</option>
+        </select>
+        <h4>Podaj Twojego ulubionego aktora filmowego:</h4>
+        <input type="text" id="aktor" minlength="4" required>
+        <h4>Podaj Twój ulubiony film:</h4>
+        <input type="text" id="film" minlength="4" required>
+        <h4>Wybierz platformę na której oglądasz najczęsciej:</h4>
+        <select id="platforma" required>
+          <option value="hbo">HBO</option>
+          <option value="netflix">Netflix</option>
+          <option value="tv">Telewizja</option>
+          <option value="amazon_prime">Amazon Prime</option>
+          <option value="apple_tv">Apple Tv</option>
+          <option value="cda">CDA Premium</option>
+          <option value="player">Player.pl</option>
+          <option value="chili">Chili.com</option>
+        </select>
+        <h4>Podaj średni czas oglądania filmów tygodniowo:</h4>
+        <select id="czas">
+          <option value="0-2">0-2h</option>
+          <option value="3-5">3-5h</option>
+          <option value="6-10">6-10h</option>
+          <option value="11-22">11-22h</option>
+          <option value=">23">wiecej niż 23h</option>
+        </select> <br>
+        <input type="submit" onclick="zapiszAnkiete();" value = "Zatwierdź i zapisz" style="margin-top: 1em;">
+      </form>
+      
+      <div id="insertedDiv"></div>
+    </article>
+
+    <article id="aboutArt" style="display:none;" class="content">
+        <h1 class="center" style="margin-bottom: 2em;">Strona informacyjna</h1>
+        <p>Strona jest rozwiązaniem projektu nr 2 z przedmiotu Techniki Internetowe 2020.</p>
+        <p>Po stronie przeglądarki wykorzystano technologie takie jak:</p>
+        <ul>
+          <li>IndexedDB</li>
+          <li>HTML5</li>
+          <li>JavaScript</li>
+          <li>arkusze styli CSS3</li>
+          <li>graficza biblioteka JS - Plotly, przy jej pomocy wykonano przejrzyste histogramy.</li>
+        </ul>
+        <p>Po stronie serwera:</p>
+        <ul>
+          <li>MongoDB</li>
+          <li>PHP</li>
+        </ul>
+        <p>Połączenie między serwerem oraz klientem zostało wykonane przy pomocy stylu RESTful.</p>
+        <p>Podczas logowania użytkownika serwer tworzy id sesji (zakodowany login użytkownika) ustanawiając przy tym czas życia utworzonego tokenu (8min). <br> 
+          Zwrócone id sesji jest przechowywane w pliku COOKIES po stronie klienta. <br> 
+          Przy każdym zapytaniu do serwera w nagłówku żądania zostaje przesłane id sesji, które jest sprawdzane pod kątem poprawności i pozostałego czasu przydatności.</p>
+        <h2 class="center">Temat i zawartość merytoryczna</h2>
+        <p>Tematem projektu jest prosty serwis umożliwiający zbieranie danych ankietowych na temat preferencji filmowych. <br>
+          Serwis działa w dwóch trybach: online i offline. <br>
+          W trybie offline użytkownik ma możliwość:
+        </p>
+        <ul>
+          <li>wypełnienia ankiety, która zostanie zapisana w lokalnej bazie IndexedDB,</li>
+          <li>wyświetlenia zawartości lokalnej bazy danych.</li>
+        </ul>
+        <p>W trybie online (po zalogowaniu) użytkownik ma możliwość:</p>
+        <ul>
+          <li>wypełnienia ankiety, która zostanie zapisana w bazie danych MongoDB po stronie serwera,</li>
+          <li>wyświetlenia zawartości bazy danych po stronie serwera,</li>
+          <li>analizowania danych ankietowych dzięki histogramom.</li>
+        </ul>
+        <h2 class="center">Budowa interfejsu i sposób działania</h2>
+        <p>Interfejs użytkownika składa się z:</p>
+        <ul>
+          <li>górnego menu nawigacyjnego, umożliwiającego przemieszczanie się pomiędzy funkcjonalnościami</li>
+          <li>okna informacyjnego położonego w lewym górnym rogu, które wyświetla informacje w jakim trybie użytkownik aktualnie pracuje oraz czy jest zalogowany.</li>
+        </ul>
+        <p>Funkcjonalności serwisu są różne w zależności od aktualnego statusu i zalogowania. Gdy użytkownik wypełni ankietę będąc w trybie offline lub niezalogowanym
+          ankieta zostanie zapisana lokalnie. Po zapisaniu można przejrzeć wypełnione ankiety offline przy pomocy przycisku "Pokaż wypełnione ankiety". <br>
+          Gdy użytkownik przełączy tryb przeglądarki w tryb online zostanie sprawdzone czy miał wcześniej ustanowioną sesję i czy jego sesja jest nadal aktywa. <br>
+          Jeżeli tak to dane z lokalnej bazy IndexedDB zostaną automatycznie przesłane do bazy po stronie serwera MongoDB. Jeżeli nie jest zalogowany - musi się zalogować.
+          Inne funkcjonalności dla użytkownika zalogowanego to przeglądanie przesłanych ankiet do bazy po stronie serwera oraz wyświetlenia prostego podsumowania w zakładce "Analiza danych". 
+        </p>
+        <h2 class="center">Dokumentacja techniczna</h2>
+        <h4>Hierarchia plików</h4>
+        <ul>
+          <li>rest</li>
+          <ul>
+            <li>.htaccess</li>
+            <li>api.php</li>
+            <li>mongo.php</li>
+            <li>rest.php</li>
+            <li>surveyDB.php</li>
+            <li>userDB.php</li>
+          </ul>
+          <li>vendor</li>
+          <li>cient.html</li>
+          <li>clientStyle.css</li>
+          <li>rest.js</li>
+          <li>composer.json</li>
+        </ul>
+
+        <p>
+          Klasa <strong>REST</strong> w folderze rest.php jest interfejsem dostępu do aplikacji. Jej metody są wywoływane przy przesyłaniu żadania do serwera jak i przesyłania odpowiedni od serwera do użytkownika. <br>
+          Klasa <strong>API</strong> dziedzicząca po REST implementuje funkcjonalności serwisu. W niej zadeklarowane są wszelkie funkcje, które m.in. wysyłają/odbierają dane z bazy danych MongoDB. <br>
+          Klasa <strong>db</strong> w folderze mongo.php jest interfejsem dostępu do bazy danych MongoDB. <br>
+          Klasy <strong>userDB</strong> oraz <strong>surveyDB</strong> implementują funkcje, które bepośrednio pośredniczą w wymianie danych z bazą danych.
+        </p>
+
+        <ul>
+          <li>userDB - dane dotyczą użytkownika, operacje przeprowadzane to m.in. logowanie, rejestracja, wylogowywanie, tworzenie id sesji, walidacja id sesji.</li>
+          <li>surveyDB - dane dotyczące ankiet, wstawianie nowych rekordów oraz zapytania o składowane dane.</li>
+        </ul>
+        <p>
+          Plik <strong>.htaccess</strong> rzutuje adresy URL na odpowiednie żądania QUERY_STRING. <br>
+          Plik <strong>client.html</strong> jest interfejsem użytkownika napisanym w języku HTML. <br>
+          Plik <strong>clientStyle.css</strong> jest plikiem arkuszy styli CSS, który odpowiednio formatuje graficznie interfejs użytkownika. <br>
+          Plik <strong>rest.js</strong> zawiera funkcje napisane w języku JavaScript, które wysyłają i odbierają zapytania do BD. Ponadto obsługują lokalną bazę IndexedDB oraz sterowanie interfejsem użytkownika. <br>
+          Folder <strong>vendor</strong> zawiera bibliotekę bazy MongoDB, a plik <strong>composer.json</strong> posiada informacje konfiguracyjne biblioteki.
+        </p>
+    </article>
+
+     <div  class="spacer"> . </div>
+
+     <footer>
+         &copy; 2021 - Patryk Śledź
+     </footer>
+    </body>
+</html>
