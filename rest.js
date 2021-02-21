@@ -57,7 +57,7 @@ function checkIfLogged(){
    if(data.sessionID == '' || data.sessionID == null){
       navWhenLoggedOut();
    }else{
-      request.open("POST", "http://pascal.fis.agh.edu.pl/~8sledzp/PROJEKT2v2/rest/isLogged", false);
+      request.open("POST", "https://movie-survey.azurewebsites.net/rest/isLogged", false);
       request.send(txt);      
    }
 
@@ -224,7 +224,7 @@ function signInFunction(){
          user.login = login;
          user.pass = pass;
          txt = JSON.stringify(user);
-         request.open("POST", "http://pascal.fis.agh.edu.pl/~8sledzp/PROJEKT2v2/rest/signin", true);
+         request.open("POST", "https://movie-survey.azurewebsites.net/rest/signin", true);
          request.send(txt);
       }
       

@@ -1,6 +1,6 @@
 RewriteEngine On
  
-RewriteBase /~8sledzp/PROJEKT2v2/rest/
+RewriteBase /rest/
  
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-s
