@@ -3,7 +3,7 @@ Online/Offline RESTfull website.
 
 App stores survey data about movie preferences.
 
-Link (MS Azure) [LINK](https://movie-survey.azurewebsites.net/client.html)
+Link (MS Azure) [LINK](https://movie-survey.azurewebsites.net/client.html) (Page load may take some time ~ 1 minute)
 
 
 <h3>Used technologies</h3>
