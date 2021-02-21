@@ -1,7 +1,7 @@
 # TI-project2
-Online/Offline RESTfull website. Application for registering and analyzing survey data.
+Online/Offline RESTfull website.
 
-App stores data about movie preferences.
+App stores survey data about movie preferences.
 
 Link (MS Azure) LINK
 
